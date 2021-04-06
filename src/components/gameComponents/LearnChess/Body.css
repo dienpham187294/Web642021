@@ -1,0 +1,42 @@
+#LearnChessBody_ArrOfAnwer {
+    width: 100%;
+    
+    border: 1px solid green;
+    border-radius: 6px;
+ 
+}
+
+#LearnChessBody_ArrOfAnwer div {
+    border: 1px solid blue;
+    border-radius: 6px;
+    min-height: 80px;
+    width: 320px;
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#LearnChessBody_ArrOfAnwer div:hover {
+    background-color: yellow;
+}
+
+#LearnChessBody_LearnNow {
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 6px;
+    background-color: white;
+}
+
+#LearnChessBody_LearnNow div {
+    border: 1px solid blue;
+    border-radius: 6px;
+    min-height: 80px;
+    width: 320px;
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#LearnChessBody_LearnNow div:hover {
+    background-color: yellow;
+}
