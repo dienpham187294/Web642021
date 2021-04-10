@@ -1,5 +1,4 @@
 import React, { useEffect } from "react"
-import { Link } from "react-router-dom";
 import { checkCookie } from "./functionCookies"
 function CheckLoginAlready() {
 
@@ -9,9 +8,10 @@ function CheckLoginAlready() {
         }
     })
     return (
-        <Link to={"/dangnhap"} >
-            <button id="btnCheck" style={{ display: "none" }}>Home</button>
-        </Link>
+
+        <a href="/?m=dangnhap"> <button id="btnCheck" style={{ display: "none" }}>Home</button></a>
+
+
     )
 }
 export default CheckLoginAlready

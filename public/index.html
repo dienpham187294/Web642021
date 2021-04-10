@@ -19,6 +19,22 @@
 </head>
 
 <body>
+  <!-- <div>
+    <a href="#" onclick="document.getElementById('updatePage').click()">CLickTest</a>
+  </div> -->
+  <div class="row p-3 mt-2 mb-1 bg-light text-dark" style="position: fixed; bottom: 5px; width: 100%;">
+    <div class="col-lg-1 col-md-3 col-sm-6 text-center">
+      <img src="./logo 05.png" alt="logo" width="35px">
+    </div>
+    <div class="col-lg-1 col-md-2 col-sm-5">
+      <button class="btn btn-sm btn-outline-primary"
+        onclick="if(!IsOn) { recognition.start(); IsOn = true}">Bật</button>
+      <button class=" btn btn-sm btn-outline-primary" onclick="if(IsOn){recognition.stop(); IsOn = false} ">Tắt</button>
+    </div>
+    <div class="col-lg-9 col-md-7 col-sm-12">
+      <input class="form-control" type="text" id="inputCmd">
+    </div>
+  </div>
   <div id="root"></div>
   <div style="display: none;">
     <div id="page-wrapper">
@@ -149,6 +165,56 @@
         speak(speechMsgInput.value);
       }
     });
+
+  </script>
+
+  <script>
+    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+    var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+
+    var grammar = '#JSGF V1.0;'
+    var recognition = new SpeechRecognition();
+    var speechRecognitionList = new SpeechGrammarList();
+    speechRecognitionList.addFromString(grammar, 1);
+    recognition.grammars = speechRecognitionList;
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.continuous = true;
+    //Them vao :
+    let IsOn = false;
+    if (Date.now() % 2 === 1) {
+      document.getElementById('inputCmd').value = "Ứng dụng công nghệ nhận diện giọng nói vào thực hành anh ngữ."
+    } else { document.getElementById('inputCmd').value = "Lưu ý: Dùng Chrome trên máy tính (laptop) chạy hệ điều hành Window để được trải nghiệm tốt nhất."}
+
+    recognition.onresult = function (event) {
+      var last = event.results.length - 1;
+      var command = event.results[last][0].transcript;
+      document.getElementById('inputCmd').value = command;
+      document.getElementById('btnSaveMessage').click();
+
+    };
+
+    // recognition.onspeechend = function () {
+    //   document.getElementById('inputCmd').value = "speecend";
+    // };
+
+    recognition.onstart = function () {
+      document.getElementById('inputCmd').value = "Chương trình đang lắng nghe...";
+    };
+    recognition.onend = function () {
+      document.getElementById('inputCmd').value = "Chương trình nhận diện giọng nói đã tắt";
+    };
+
+    recognition.addEventListener('end', function () {
+      if (IsOn) {
+        recognition.start();
+      }
+    });
+
+    recognition.onerror = function (event) {
+      document.getElementById('inputCmd').value = "Có lỗi: " + event.error; ".Lưu ý: Chương trình nhận diện giọng nói chưa hỗ trợ trên máy Iphone và Mac's IOS"
+    }
+
 
   </script>
 </body>

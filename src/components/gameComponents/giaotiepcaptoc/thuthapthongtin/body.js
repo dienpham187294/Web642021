@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import RandomInt from "../../../../helpers/randomInt";
-// import { Application } from "pixi.js";
-// import * as PIXI from "pixi.js";
 import { getCookie } from "../../../../helpers/functionCookies"
-// import { Read } from "../../../../helpers/js_speak"
 import InfoPeople from "./InfoPeople";
 import "./Body.css"
 let TimeCount = Date.now();
 let ArrPeople = [];
 let TimeToAppear = 0;
 let MessageSave = ""
-function Mbody({ socket, message, IDofRoom, ArrIDofAllMemberInRoom }) {
+function Mbody({ socket, message, setMessage, IDofRoom, ArrIDofAllMemberInRoom }) {
     const [TimeToCount, SetTimeToCount] = useState(0);
     const [ArrPeopleUse, SetArrPeopleUse] = useState([]);
     const [ArrPeopleSearch, SetArrPeopleSearch] = useState([]);
@@ -22,41 +19,49 @@ function Mbody({ socket, message, IDofRoom, ArrIDofAllMemberInRoom }) {
         }, 1000);
         return () => clearInterval(interval);
     }, []);
+
+
+
     useEffect(() => {
         if (Page !== -1) {
             let num = Page
             ArrPeople[num].status = false;
             MessageSave += message;
-            if (message === "") {
+            if (message !== "") {
                 if (_CheckMessageAndCommand(MessageSave, "how old are you", 75) && Date.now() - TimeCount > 300) {
                     TimeCount = Date.now();
                     MessageSave = "";
+                    setMessage("-")
                     // let Spell = ArrPeople[num].name.split("").join(" ");
                     let mynameis = "My age is " + ArrPeople[num].age
                     document.getElementById('speech-msg').value = mynameis;
                     document.getElementById("speak").click();
+
                 }
                 if (_CheckMessageAndCommand(MessageSave, "hi how are you", 70) && Date.now() - TimeCount > 300) {
                     TimeCount = Date.now();
                     MessageSave = "";
+                    setMessage("-")
                     let mynameis = "I'm good! And you?"
                     // Read(mynameis, 1)
                     document.getElementById('speech-msg').value = mynameis;
                     document.getElementById("speak").click();
-                    // console.log(mynameis)
+
                 }
                 if (_CheckMessageAndCommand(MessageSave, "what is your name", 70) && Date.now() - TimeCount > 300) {
                     TimeCount = Date.now();
                     MessageSave = "";
+                    setMessage("-")
                     let mynameis = "My name is " + ArrPeople[num].name;
                     // Read(mynameis, 0)
                     document.getElementById('speech-msg').value = mynameis;
                     document.getElementById("speak").click();
-                    // console.log(mynameis)
+
                 }
                 if (_CheckMessageAndCommand(MessageSave, "can you spell your name", 75) && Date.now() - TimeCount > 300) {
                     TimeCount = Date.now();
                     MessageSave = "";
+                    setMessage("-")
                     let Spell = ArrPeople[num].name.split("").join(" ");
                     let mynameis = "It is " + Spell
                     document.getElementById('rate').value = 0.7
@@ -67,7 +72,7 @@ function Mbody({ socket, message, IDofRoom, ArrIDofAllMemberInRoom }) {
 
             }
         }
-    }, [Page, message]);
+    }, [Page, message, setMessage]);
     useEffect(() => {
         if (TimeToCount > TimeToAppear) {
             TimeToAppear += RandomInt(6, 20);
@@ -77,6 +82,7 @@ function Mbody({ socket, message, IDofRoom, ArrIDofAllMemberInRoom }) {
     }, [TimeToCount]);
 
     return <div id="ChessBody">
+        <div><a href={`/?m=giaotiep&p=thu-thap-thong-tin&r=${IDofRoom}`}>Reset</a></div>
         <div> <audio id="audioBTN" controls style={{ display: "none" }} src={require("./correct.wav")}></audio></div>
         {/* <div>Thu thap thong tin {TimeToCount} </div> */}
         {Page !== -1
@@ -121,7 +127,7 @@ function _ArrOnePeople(Page, SetArrPeopleSearch, ArrPeopleSearch, socket, IDofRo
                     <input className="form-control" type="text" placeholder="Room number." id="number" />
                     <button className="btn btn-outline-primary mt-4"
                         onClick={() => _Submit(document.getElementById("number").value, socket, ArrPeople[Page], IDofRoom, ArrIDofAllMemberInRoom, SetPage)}>
-                        Submit
+                        Enter
                     </button>
                 </div>
             </div>
@@ -170,7 +176,6 @@ function Search(name, age) {
             arrRes.push(e)
         }
     })
-    console.log(arrRes)
     return arrRes
 }
 
