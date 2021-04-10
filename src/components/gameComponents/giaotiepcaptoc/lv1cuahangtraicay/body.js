@@ -35,10 +35,13 @@ function Mbody({ socket, message, setMessage, IDofRoom, ArrIDofAllMemberInRoom }
                     TimeCount = Date.now();
                     MessageSave = "";
                     setMessage("-")
-                    let mynameis = ""
-                    if (Date.now() % 2 === 1) {
+                    let mynameis = "";
+                    let numToSpeak = Date.now() % 3;
+                    if (numToSpeak === 1) {
                         mynameis = "I would like to take some" + ArrPeople[num].FruitName
-                    } else { mynameis = "Do you have any " + ArrPeople[num].FruitName }
+                    } else if (numToSpeak === 2) { mynameis = "Do you have any " + ArrPeople[num].FruitName } else {
+                        mynameis = ArrPeople[num].FruitName + ". Do you have it?"
+                    }
                     document.getElementById('speech-msg').value = mynameis;
                     document.getElementById("speak").click();
 
@@ -48,12 +51,10 @@ function Mbody({ socket, message, setMessage, IDofRoom, ArrIDofAllMemberInRoom }
                     MessageSave = "";
                     setMessage("-")
                     let mynameis = ""
-                    let numToSpeak = Date.now() % 3;
-                    if (numToSpeak === 1) {
-                        mynameis = "I would like to take some" + ArrPeople[num].FruitName
-                    } else if (numToSpeak === 2) { mynameis = "Do you have any " + ArrPeople[num].FruitName } else {
-                        mynameis = ArrPeople[num].FruitName + ". Do you have it?"
-                    }
+                    if (Date.now() % 2 === 1) {
+                        mynameis = "I will take " + ArrPeople[num].FruitAmount + " Kg.";
+                    } else { mynameis = ArrPeople[num].FruitAmount + " Kg." }
+
                     document.getElementById('speech-msg').value = mynameis;
                     document.getElementById("speak").click();
 

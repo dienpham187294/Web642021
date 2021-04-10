@@ -52,8 +52,8 @@ function Mbody({ socket, message, setMessage, IDofRoom, ArrIDofAllMemberInRoom }
                     setMessage("-")
                     let mynameis = ""
                     if (Date.now() % 2 === 1) {
-                        mynameis = "I will take " + ArrPeople[num].FruitAmount + " Kg.";
-                    } else { mynameis = ArrPeople[num].FruitAmount + " Kg." }
+                        mynameis = "I will take " + ArrPeople[num].FruitAmount + ".";
+                    } else { mynameis = ArrPeople[num].FruitAmount + "." }
                     document.getElementById('speech-msg').value = mynameis;
                     document.getElementById("speak").click();
 
@@ -117,7 +117,7 @@ function Mbody({ socket, message, setMessage, IDofRoom, ArrIDofAllMemberInRoom }
             object.FruitName = InfoFruit()[randomFruit].name;
             object.FruitImg = InfoFruit()[randomFruit].img;
             object.FruitPrice = InfoFruit()[randomFruit].price;
-            object.FruitAmount = RandomInt(5, 15);
+            object.FruitAmount = RandomInt(3, 8);
             ArrPeople.push(object);
             SetArrPeopleUse(ArrPeople);
         }

@@ -4,7 +4,7 @@ import { Key } from "../../../../helpers/Key";
 import "./Lobby.css";
 // import InfoPeople from "./InfoPeople";
 import InfoFruit from "./InfoFruit";
-// import RandomInt from "../../../../helpers/randomInt";
+import RandomInt from "../../../../helpers/randomInt";
 const e = React.createElement;
 let ArrFruit_1 = InfoFruit();
 let ArrTapLamQuen_1 = [
@@ -16,9 +16,9 @@ let ArrTapLamQuen_1 = [
 function MonopolyLobby({ socket, room, username, setjionRoom, setStart, message, setMessage }) {
   const [ArrTapLamQuen, SetArrTapLamQuen] = useState(ArrTapLamQuen_1);
   const [ENtextChoose, SetENtextChoose] = useState("--");
-  // const [AnwerRight, SetAnwerRight] = useState("--");
-  // const [AnwerChoose, SetAnwerChoose] = useState(-1);
-  // const [ArrofAnwerChoose, SetArrofAnwerChoose] = useState([]);
+  const [AnwerRight, SetAnwerRight] = useState("--");
+  const [AnwerChoose, SetAnwerChoose] = useState(-1);
+  const [ArrofAnwerChoose, SetArrofAnwerChoose] = useState([]);
   const [ArrFruit, SetArrFruit] = useState(ArrFruit_1);
   const [ChooseFruit, SetChooseFruit] = useState("");
   useEffect(() => {
@@ -41,18 +41,18 @@ function MonopolyLobby({ socket, room, username, setjionRoom, setStart, message,
     }
   }, [message, ChooseFruit, setMessage]);
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   if (AnwerRight === AnwerChoose) {
-  //     let mynameis = ""
-  //     if (Date.now() % 2 === 0) {
-  //       mynameis = "That's right. Good job!"
-  //     } else { mynameis = "Good. Keep going!" }
+    if (AnwerRight === AnwerChoose) {
+      let mynameis = ""
+      if (Date.now() % 2 === 0) {
+        mynameis = "That's right. Good job!"
+      } else { mynameis = "Good. Keep going!" }
 
-  //     document.getElementById('speech-msg').value = mynameis;
-  //     document.getElementById("speak").click();
-  //   }
-  // }, [AnwerRight, AnwerChoose]);
+      document.getElementById('speech-msg').value = mynameis;
+      document.getElementById("speak").click();
+    }
+  }, [AnwerRight, AnwerChoose]);
   function showRoom() {
     let arrRoom = [];
     room.forEach(ee => {
@@ -92,7 +92,7 @@ function MonopolyLobby({ socket, room, username, setjionRoom, setStart, message,
 
   return (
     <div>
-      <h5>Bạn đang nhập vai vào làm nhân viên cửa hàng trái cây.</h5>
+      <h5>Bạn đang nhập vai vào làm nhân viên cửa hàng.</h5>
       <div style={{ textAlign: "left" }}>
         <b>Nhiệm vụ của bạn là chào hỏi khách, trả lời những câu hỏi khách cần và ghi phiếu bán hàng khách.</b>
 
@@ -109,7 +109,7 @@ function MonopolyLobby({ socket, room, username, setjionRoom, setStart, message,
             {_ShowArrTapLamQuen(ArrTapLamQuen, SetENtextChoose, ENtextChoose)}
           </tbody>
         </table>
-        <h5 className="mt-4">Tập làm quen từ vựng trái cây:</h5>
+        <h5 className="mt-4">Tập làm quen từ vựng:</h5>
         <table className="table table-sm table-striped">
           <thead>
             <tr>
@@ -123,9 +123,9 @@ function MonopolyLobby({ socket, room, username, setjionRoom, setStart, message,
           </tbody>
         </table>
         <h5 className="mt-4">Tập làm quen nghe câu:</h5>
-        {/* <button className="btn btn-outline-primary btn-sm" onClick={() => _ListenAge(SetAnwerRight, SetArrofAnwerChoose)}>Nghe tuổi</button>
-        <button className="btn btn-outline-primary btn-sm" onClick={() => _ListenName(SetAnwerRight, SetArrofAnwerChoose)}>Nghe tên</button>
-        {_ShowListen(AnwerChoose, AnwerRight, SetAnwerChoose, ArrofAnwerChoose)} */}
+        {/* <button className="btn btn-outline-primary btn-sm" onClick={() => _ListenAge(SetAnwerRight, SetArrofAnwerChoose)}>Nghe tuổi</button> */}
+        <button className="btn btn-outline-primary btn-sm" onClick={() => _ListenName(SetAnwerRight, SetArrofAnwerChoose)}>Nghe và chọn câu trả lời:</button>
+        {_ShowListen(AnwerChoose, AnwerRight, SetAnwerChoose, ArrofAnwerChoose)}
       </div>
       <p className="border border-primary mt-3" />
       <div className="row mt-3">
@@ -203,10 +203,10 @@ function _SetNameAndSpeak(SetChooseFruit, name) {
   document.getElementById('speech-msg').value = name;
   document.getElementById("speak").click()
 }
-// function _ShowListen(AnwerChoose, AnwerRight, SetAnwerChoose, ArrofAnwerChoose) {
-//   return ArrofAnwerChoose.map((e, index) => <div className="ChooseAge" key={index} onClick={() => SetAnwerChoose(e)}
-//     style={{ backgroundColor: (AnwerChoose === e) ? "yellow" : "transparent" }}>{e}</div>)
-// }
+function _ShowListen(AnwerChoose, AnwerRight, SetAnwerChoose, ArrofAnwerChoose) {
+  return ArrofAnwerChoose.map((e, index) => <div className="ChooseAge" key={index} onClick={() => SetAnwerChoose(e)}
+    style={{ backgroundColor: (AnwerChoose === e) ? "yellow" : "transparent" }}>{e}</div>)
+}
 
 // function _ListenAge(SetAnwerRight, SetArrofAnwerChoose) {
 //   let arr = [];
@@ -222,20 +222,18 @@ function _SetNameAndSpeak(SetChooseFruit, name) {
 //   let arrToSetChoose = arr.sort(() => Math.random() - 0.5);
 //   SetArrofAnwerChoose(arrToSetChoose);
 // }
-// function _ListenName(SetAnwerRight, SetArrofAnwerChoose) {
-//   let arr = [];
-//   let temp = InfoPeople()[Date.now() % 100].name
-//   arr.push(temp);
-//   SetAnwerRight(temp)
-//   let mynameis = "My name is " + temp
-//   document.getElementById('speech-msg').value = mynameis;
-//   arr.push(InfoPeople()[RandomInt(0, 99)].name);
-//   arr.push(InfoPeople()[RandomInt(0, 99)].name);
-//   arr.push(InfoPeople()[RandomInt(0, 99)].name);
-//   document.getElementById("speak").click();
-//   let arrToSetChoose = arr.sort(() => Math.random() - 0.5);
-//   SetArrofAnwerChoose(arrToSetChoose);
-// }
-
-
-
+function _ListenName(SetAnwerRight, SetArrofAnwerChoose) {
+  let arr = [];
+  let lengthInfo = InfoFruit().length
+  let temp = InfoFruit()[Date.now() % lengthInfo].name
+  arr.push(temp);
+  SetAnwerRight(temp)
+  let mynameis = temp
+  document.getElementById('speech-msg').value = mynameis;
+  arr.push(InfoFruit()[RandomInt(0, lengthInfo - 1)].name);
+  arr.push(InfoFruit()[RandomInt(0, lengthInfo - 1)].name);
+  arr.push(InfoFruit()[RandomInt(0, lengthInfo - 1)].name);
+  document.getElementById("speak").click();
+  let arrToSetChoose = arr.sort(() => Math.random() - 0.5);
+  SetArrofAnwerChoose(arrToSetChoose);
+}

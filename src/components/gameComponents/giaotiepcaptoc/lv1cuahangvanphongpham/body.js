@@ -117,7 +117,7 @@ function Mbody({ socket, message, setMessage, IDofRoom, ArrIDofAllMemberInRoom }
             object.FruitName = InfoFruit()[randomFruit].name;
             object.FruitImg = InfoFruit()[randomFruit].img;
             object.FruitPrice = InfoFruit()[randomFruit].price;
-            object.FruitAmount = RandomInt(5, 15);
+            object.FruitAmount = RandomInt(3, 8);
             ArrPeople.push(object);
             SetArrPeopleUse(ArrPeople);
         }
