@@ -1,0 +1,14 @@
+.ENText{
+    cursor: pointer;
+}
+.ENText:hover{
+    background-color: yellow;
+}.ChooseAge{
+    width: 10%;
+    display: inline-block;
+    margin-left: 8%;
+    cursor: pointer;
+    border: 1px solid green;
+    border-radius: 6px;
+    text-align: center;
+}

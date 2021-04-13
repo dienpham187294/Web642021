@@ -1,0 +1,40 @@
+function InfoFruit() {
+    let arr = [{ "img": "beef.jpeg", "name": "beef", "status": false, "price": 35 },
+    { "img": "chicken breast.jpeg", "name": "chicken breast", "status": false, "price": 39 },
+    { "img": "chicken leg.jpeg", "name": "chicken leg", "status": false, "price": 57 },
+    { "img": "chicken split.jpeg", "name": "chicken split", "status": false, "price": 46 },
+    { "img": "chicken thigh.jpeg", "name": "chicken thigh", "status": false, "price": 55 },
+    { "img": "chicken.jpeg", "name": "chicken", "status": false, "price": 34 },
+    { "img": "chiken wing.jpeg", "name": "chiken wing", "status": false, "price": 36 },
+    { "img": "clam.jpeg", "name": "clam", "status": false, "price": 40 },
+    { "img": "crab.jpeg", "name": "crab", "status": false, "price": 54 },
+    { "img": "duck.jpeg", "name": "duck", "status": false, "price": 33 },
+    { "img": "fish filet.jpeg", "name": "fish filet", "status": false, "price": 43 },
+    { "img": "fish steak.jpeg", "name": "fish steak", "status": false, "price": 43 },
+    { "img": "fish.jpeg", "name": "fish", "status": false, "price": 38 },
+    { "img": "ground beef.jpeg", "name": "ground beef", "status": false, "price": 60 },
+    { "img": "ham.jpeg", "name": "ham", "status": false, "price": 30 },
+    { "img": "lobster.jpeg", "name": "lobster", "status": false, "price": 52 },
+    { "img": "mussel.jpeg", "name": "mussel", "status": false, "price": 42 },
+    { "img": "oyster.jpeg", "name": "oyster", "status": false, "price": 30 },
+    { "img": "pork chops.jpeg", "name": "pork chops", "status": false, "price": 30 },
+    { "img": "pork lamb.jpeg", "name": "pork lamb", "status": false, "price": 33 },
+    { "img": "pork leg.jpeg", "name": "pork leg", "status": false, "price": 43 },
+    { "img": "pork roast.jpeg", "name": "pork roast", "status": false, "price": 59 },
+    { "img": "pork steak.jpeg", "name": "pork steak", "status": false, "price": 44 },
+    { "img": "pork.jpeg", "name": "pork", "status": false, "price": 45 },
+    { "img": "quarter.jpeg", "name": "quarter", "status": false, "price": 37 },
+    { "img": "sausage.jpeg", "name": "sausage", "status": false, "price": 35 },
+    { "img": "scallop.jpeg", "name": "scallop", "status": false, "price": 49 },
+    { "img": "shrimp.jpeg", "name": "shrimp", "status": false, "price": 44 },
+    { "img": "spare ribs.jpeg", "name": "spare ribs", "status": false, "price": 33 },
+    { "img": "stewing meat.jpeg", "name": "stewing meat", "status": false, "price": 48 },
+    { "img": "turkey.jpeg", "name": "turkey", "status": false, "price": 57 },
+    { "img": "whole chicken.jpeg", "name": "whole chicken", "status": false, "price": 55 },
+    { "img": "whole fish.jpeg", "name": "whole fish", "status": false, "price": 49 },
+    { "img": "bacon.jpeg", "name": "bacon", "status": false, "price": 46 }]
+
+    return arr
+}
+
+export default InfoFruit

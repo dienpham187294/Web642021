@@ -1,0 +1,12 @@
+a {
+  font-style: italic;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.table {
+  max-width: 800px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  text-align: left;
+}
