@@ -172,7 +172,7 @@ function _SortMessage(messCheck) {
 function Search(name, age) {
     let arrRes = []
     InfoPeople().forEach(e => {
-        if ((e.age == age || age == "") && (name == "" || e.name.toLowerCase().indexOf(name.toLowerCase()) > -1)) {
+        if ((e.age.toString() === age || age === "") && (name === "" || e.name.toLowerCase().indexOf(name.toLowerCase()) > -1)) {
             arrRes.push(e)
         }
     })
@@ -187,7 +187,7 @@ function ShowSearch(ArrSearch) {
 
 function _Submit(number, socket, personuse, IDofRoom, ArrIDofAllMemberInRoom, SetPage) {
 
-    if (number == personuse.room) {
+    if (number === personuse.room.toString()) {
         socket.emit("chess", ["UpScore", IDofRoom, getCookie("username"), ArrIDofAllMemberInRoom]);
         let mynameis = "Thank you!"
         // Read(mynameis, 1)

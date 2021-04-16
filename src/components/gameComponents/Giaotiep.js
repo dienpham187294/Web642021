@@ -37,7 +37,7 @@ function Giaotiep({ socket, message, setMessage }) {
 
     return (
         <div className="container-fluid text-center">
-            <CheckLoginAlready />
+            <CheckLoginAlready socket={socket} />
             <div>
                 {Page === "gioithieu" ? <div>
                     <h3>Học tiếng anh giao tiếp thông qua việc đóng vai vào một trường hợp cụ thể.</h3>

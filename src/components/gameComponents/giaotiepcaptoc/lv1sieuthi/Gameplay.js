@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./Gameplay.css";
 import Mheader from "./header";
 import Mbody from "./body"
 import Mfooter from "./footer";
 function MonoGameSence({ gamePlayData, socket, message, setMessage, IDofRoom, ArrIDofAllMemberInRoom }) {
-    const [gamedata, setGamedata] = useState("")
-    useEffect(() => {
-        setGamedata(JSON.stringify(gamePlayData))
-    }, [gamePlayData]);
 
     return (
         <div>
@@ -18,8 +14,6 @@ function MonoGameSence({ gamePlayData, socket, message, setMessage, IDofRoom, Ar
             <Mheader gamePlayData={gamePlayData} />
             <p className="border border-primary mt-3" />
             <Mfooter />
-            <p className="border border-primary mt-3" />
-            <div>{gamedata}</div>
         </div>
     );
 }

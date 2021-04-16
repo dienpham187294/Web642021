@@ -8,10 +8,9 @@ import RandomInt from "../../../../helpers/randomInt";
 const e = React.createElement;
 let ArrFruit_1 = InfoFruit();
 let ArrTapLamQuen_1 = [
-  { "EN": "How much do you want?", "VN": "Bạn muốn bao nhiêu?", "status": false },
+  { "EN": "How much do you want?", "VN": "Bạn muốn bao nhiêu?", "status": false }
   , { "EN": "How much would you like?", "VN": "Bạn cần mua bao nhiêu?", "status": false }
   , { "EN": "What would you like?", "VN": "Bạn cần mua gì?", "status": false }
-
 ]
 function MonopolyLobby({ socket, room, username, setjionRoom, setStart, message, setMessage }) {
   const [ArrTapLamQuen, SetArrTapLamQuen] = useState(ArrTapLamQuen_1);

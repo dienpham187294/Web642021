@@ -30,7 +30,6 @@ function Mbody({ socket, message, setMessage, IDofRoom, ArrIDofAllMemberInRoom }
             ArrPeople[num].status = false;
             MessageSave += message;
             if (message !== "") {
-
                 if (_CheckMessageAndCommand(MessageSave, "what would you like", 75) && Date.now() - TimeCount > 300) {
                     TimeCount = Date.now();
                     MessageSave = "";
@@ -46,6 +45,7 @@ function Mbody({ socket, message, setMessage, IDofRoom, ArrIDofAllMemberInRoom }
                     document.getElementById("speak").click();
 
                 }
+
                 if (_CheckMessageAndCommand(MessageSave, "how much do you want", 75) && Date.now() - TimeCount > 300) {
                     TimeCount = Date.now();
                     MessageSave = "";
@@ -53,52 +53,14 @@ function Mbody({ socket, message, setMessage, IDofRoom, ArrIDofAllMemberInRoom }
                     let mynameis = ""
                     if (Date.now() % 2 === 1) {
                         mynameis = "I will take " + ArrPeople[num].FruitAmount + " Kg.";
-                    } else { mynameis = ArrPeople[num].FruitAmount + " Kg." }
-                    document.getElementById('speech-msg').value = mynameis;
-                    document.getElementById("speak").click();
+                    } else { mynameis = "Give me " + ArrPeople[num].FruitAmount + " Kg." }
 
-                }
-                if (_CheckMessageAndCommand(MessageSave, "how old are you", 75) && Date.now() - TimeCount > 300) {
-                    TimeCount = Date.now();
-                    MessageSave = "";
-                    setMessage("-")
-                    // let Spell = ArrPeople[num].name.split("").join(" ");
-                    let mynameis = "My age is " + ArrPeople[num].age
                     document.getElementById('speech-msg').value = mynameis;
                     document.getElementById("speak").click();
+                }
 
-                }
-                if (_CheckMessageAndCommand(MessageSave, "hi how are you", 70) && Date.now() - TimeCount > 300) {
-                    TimeCount = Date.now();
-                    MessageSave = "";
-                    setMessage("-")
-                    let mynameis = "I'm good! And you?"
-                    // Read(mynameis, 1)
-                    document.getElementById('speech-msg').value = mynameis;
-                    document.getElementById("speak").click();
 
-                }
-                if (_CheckMessageAndCommand(MessageSave, "what is your name", 70) && Date.now() - TimeCount > 300) {
-                    TimeCount = Date.now();
-                    MessageSave = "";
-                    setMessage("-")
-                    let mynameis = "My name is " + ArrPeople[num].name;
-                    // Read(mynameis, 0)
-                    document.getElementById('speech-msg').value = mynameis;
-                    document.getElementById("speak").click();
 
-                }
-                if (_CheckMessageAndCommand(MessageSave, "can you spell your name", 75) && Date.now() - TimeCount > 300) {
-                    TimeCount = Date.now();
-                    MessageSave = "";
-                    setMessage("-")
-                    let Spell = ArrPeople[num].name.split("").join(" ");
-                    let mynameis = "It is " + Spell
-                    document.getElementById('rate').value = 0.7
-                    document.getElementById('speech-msg').value = mynameis;
-                    document.getElementById("speak").click();
-                    document.getElementById('rate').value = 1
-                }
 
             }
         }

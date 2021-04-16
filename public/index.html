@@ -16,35 +16,47 @@
     integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
     crossorigin="anonymous"></script>
   <title>EricPham</title>
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <!-- <link href="assets/vendor/aos/aos.css" rel="stylesheet"> -->
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
 </head>
 
 <body>
   <!-- <div>
     <a href="#" onclick="document.getElementById('updatePage').click()">CLickTest</a>
   </div> -->
-  <div class="row p-3 mt-2 mb-1 bg-light text-dark" style="position: fixed; bottom: 5px; width: 100%;">
-    <div class="col-lg-1 col-md-3 col-sm-6 text-center">
+  <div class="row p-3 mt-2 mb-1 bg-light text-dark" style="position: fixed; bottom: 5px; width: 100%; z-index: 1;">
+    <div class="col-1 text-center">
       <img src="./logo 05.png" alt="logo" width="38px">
     </div>
-    <div class="col-lg-1 col-md-2 col-sm-5">
+    <div class="col-3">
       <button class="btn btn btn-outline-primary" id="Ison" onclick="if(!IsOn) { 
           recognition.start(); 
           IsOn = true;
           document.getElementById('Ison').style.display = 'none';
           document.getElementById('Isoff').style.display = 'block';
           }">Bật</button>
-      <button class=" btn btn btn-outline-primary" onclick="if(IsOn){
+      <button class=" btn btn btn-outline-danger" onclick="if(IsOn){
           recognition.stop(); 
           IsOn = false;  
           document.getElementById('Ison').style.display = 'block';
           document.getElementById('Isoff').style.display = 'none';
           }" id="Isoff">Tắt</button>
     </div>
-    <div class="col-lg-9 col-md-7 col-sm-12">
+    <div class="col-6">
       <input class="form-control" type="text" id="inputCmd" disabled>
     </div>
   </div>
   <div id="root"></div>
+  <button style="display: none;" onclick="_FN_diachiip()" id="getdiachiip">Địa chỉ Ip</button>
   <div style="display: none;">
     <div id="page-wrapper">
       <h1>Web Speech Synthesis Demo</h1>
@@ -224,9 +236,19 @@
     });
 
     recognition.onerror = function (event) {
-      document.getElementById('inputCmd').value = "Có lỗi: " + event.error; ".Lưu ý: Chương trình nhận diện giọng nói chưa hỗ trợ trên máy Iphone và Mac's IOS"
+      document.getElementById('inputCmd').value = "Có lỗi: " + event.error + ".Lưu ý: Chương trình nhận diện giọng nói chưa hỗ trợ trên máy Iphone và Mac's IOS"
     }
 
+
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+  <script>
+    function _FN_diachiip() {
+      $.getJSON('http://ip-api.com/json', function (data) {
+        document.getElementById("ID_IP").value = data.query
+      });
+    }
 
   </script>
 </body>
