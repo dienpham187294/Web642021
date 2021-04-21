@@ -3,7 +3,7 @@ import { delettCookie } from "../../helpers/functionCookies";
 import './Dangkytaikhoan.css';
 let arrInfoDangkytaikhoan = [];
 function Dangkytaikhoan({ socket }) {
-    const [PhoneMessage, SetPhoneMessage] = useState("Hãy nhập số điện thoại bạn đang dùng để có thể nhận mã code gia hạn!");
+    const [PhoneMessage, SetPhoneMessage] = useState("Hãy nhập tên đăng nhập!");
     const [AllCheckMessage, SetAllCheckMessage] = useState("Vui lòng nhập đầy đủ thông tin!");
     const [StatusDangkyDisable, SetStatusDangkyDisable] = useState(true);
     const [PhoneNumber, SetPhoneNumber] = useState();
@@ -11,6 +11,7 @@ function Dangkytaikhoan({ socket }) {
     const [Email, SetEmail] = useState("");
     const [Password, SetPassword] = useState("");
     const [Ip, SetIp] = useState("");
+    const [Page, SetPage] = useState(false);
     useEffect(() => {
         delettCookie("usernameEricpham");
         delettCookie("username");
@@ -18,7 +19,7 @@ function Dangkytaikhoan({ socket }) {
     }, [])
     useEffect(() => {
         setTimeout(() => { socket.emit("Login", ["dangkytaikhoan", socket.id]); }, 1000);
-        socket.on("getinfodangkytaikhoan", (data) => { arrInfoDangkytaikhoan = data; })
+        socket.on("getinfodangkytaikhoan", (data) => { arrInfoDangkytaikhoan = data; SetPage(true) })
     }, [socket])
     function _fn_checkPhoneNumber() {
         if (document.getElementById("ID_phonenumber").value !== "null") {
@@ -26,10 +27,10 @@ function Dangkytaikhoan({ socket }) {
             if (phonenumber.length > 11 || phonenumber.length < 10) {
                 SetPhoneMessage("Số phone không hợp lệ");
             } else {
-                let messagePhone = "Số điện thoại có thể sử dụng được!";
+                let messagePhone = "Tên đăng nhập có thể sử dụng được!";
                 arrInfoDangkytaikhoan.forEach(e => {
                     if (e.username === phonenumber.toString()) {
-                        messagePhone = "Số điện thoại đã được sử dụng. Vui lòng nhập số điện thoại khác."
+                        messagePhone = "Tên đăng nhập đã được sử dụng. Vui lòng nhập tên đăng nhập khác."
                     }
                 })
                 SetPhoneMessage(messagePhone);
@@ -37,11 +38,11 @@ function Dangkytaikhoan({ socket }) {
                 SetIp(document.getElementById("ID_IP").value)
             }
         } else {
-            SetPhoneMessage("Vui lòng nhập số điện thoại đang sử dụng!");
+            SetPhoneMessage("Vui lòng nhập tên đăng nhập đang sử dụng!");
         }
     }
     function _fn_checkAllInfomation() {
-        if (PhoneMessage === "Số điện thoại có thể sử dụng được!") {
+        if (PhoneMessage === "Tên đăng nhập có thể sử dụng được!") {
             let messageCheckAll = "";
 
             if (document.getElementById("ID_email").value.length < 6) {
@@ -66,7 +67,7 @@ function Dangkytaikhoan({ socket }) {
                 SetAllCheckMessage(messageCheckAll)
             }
         } else {
-            SetAllCheckMessage("Vui lòng kiểm tra số điện thoại đang sử dụng!")
+            SetAllCheckMessage("Vui lòng kiểm tra Tên đăng nhập đang sử dụng!")
         }
     }
     function _FN_Dangkyngay() {
@@ -76,60 +77,52 @@ function Dangkytaikhoan({ socket }) {
     return (
         <div id="main_dangkytaikhoan">
             {StatusDangkyDisable
-                ? <div>
+                ? Page ? <div>
                     <form className="mt-6 text-center">
                         <div className="form-group">
                             <input
-                                type="number"
+                                type="text"
                                 className="form-control"
-                                id="ID_phonenumber" aria-describedby="emailHelp" placeholder="Nhập số điện thoại đang sử dụng để nhận mã code."
-                            // onChange={() => setUsernameCheck(document.getElementById("ID_phonenumber").value)}
-                            />
+                                id="ID_phonenumber" aria-describedby="emailHelp" placeholder="Nhập tên đăng nhập." />
                             <input onClick={() => _fn_checkPhoneNumber()} type="button" className="btn btn-sm btn-outline-primary mt-1" value="Kiểm tra" />
                             <small id="emailHelp" className="form-text text-muted">{PhoneMessage}</small>
                         </div>
                         <div className="form-group">
-                            <input type="text" className="form-control" id="ID_email" placeholder="Nhập email"
-                            // onChange={() => setPassWordCheck(document.getElementById("exampleInputPassword1").value)}
-                            />
+                            <input type="text" className="form-control" id="ID_email" placeholder="Nhập email" />
+                            <small id="emailHelp" className="form-text text-muted">Vui lòng nhập email chính xác để nhận mã kích hoạt!</small>
                         </div>
                         <div className="form-group">
-                            <input type="text" className="form-control" id="ID_name" placeholder="Nhập tên của bạn"
-                            // onChange={() => setPassWordCheck(document.getElementById("exampleInputPassword1").value)}
-                            />
+                            <input type="text" className="form-control" id="ID_name" placeholder="Nhập tên của bạn" />
                         </div>
                         <div className="form-group">
-                            <input type="password" className="form-control" id="ID_passwordlan1" placeholder="Nhập password lần 1"
-                            // onChange={() => setPassWordCheck(document.getElementById("exampleInputPassword1").value)}
-                            />
+                            <input type="password" className="form-control" id="ID_passwordlan1" placeholder="Nhập password lần 1" />
                         </div>
                         <div className="form-group">
-                            <input type="password" className="form-control" id="ID_passwordlan2" placeholder="Nhập lại password lần 2"
-                            // onChange={() => setPassWordCheck(document.getElementById("exampleInputPassword1").value)}
-                            />
+                            <input type="password" className="form-control" id="ID_passwordlan2" placeholder="Nhập lại password lần 2" />
                         </div>
                         <input type="button" onClick={() => _fn_checkAllInfomation()} className="btn btn-sm btn-outline-primary mt-1" value="Kiểm tra" />
                         <small className="form-text text-muted">{AllCheckMessage}</small>
                         <br /><br />
-                        {/* <button disabled={StatusDangkyDisable} type="button" className="btn btn-primary">Đăng ký</button> */}
-
                         <div style={{ display: "none" }} className="form-group">
-                            <input type="text" className="form-control" id="ID_IP" placeholder="Địa chỉ Ip"
-                            // onChange={() => setPassWordCheck(document.getElementById("exampleInputPassword1").value)}
-                            />
+                            <input type="text" className="form-control" id="ID_IP" placeholder="Địa chỉ Ip" />
                         </div>
                     </form>
                 </div>
+                    : <div style={{ textAlign: "center" }}>
+                        "Xin chờ giây lát!"
+                        <br />
+                        <a href="/?m=dang-ky-tai-khoan" className="btn-get-started scrollto">Bấm vào đây nếu quá lâu.</a>
+                    </div>
                 : <div>
-                    <p><b>Số điện thoại: </b> {PhoneNumber} </p>
+                    <p><b>Tên đăng nhập: </b> {PhoneNumber} </p>
                     <p><b>Tên: </b> {Name} </p>
                     <p><b>Email: </b> {Email} </p>
                     <p><b>Thời gian sử dụng: </b> 5 ngày.</p>
-                    <br />
-                    <p><b>Thêm 25 ngày trải nghiệm miễn phí: </b>
+                    {/* <br /> */}
+                    {/* <p><b>Thêm 25 ngày trải nghiệm miễn phí: </b>
                         <br />
-                    Hệ thống sẽ gửi qua SMS qua số điện thoại bạn đã đăng ký một mã code.
-                    Nhập mã code trong mục thông tin chi tiết để nhận thêm 25 ngày sử dụng sản phẩm miễn phí.</p>
+                    Hệ thống sẽ gửi qua email bạn đã đăng ký một mã code.
+                    Nhập mã code trong mục thông tin chi tiết để nhận thêm 25 ngày sử dụng sản phẩm miễn phí.</p> */}
                     <br /> <br />
                     <button onClick={() => _FN_Dangkyngay()} type="button" className="btn btn-primary">Đăng ký</button>
                     <br /> <br />

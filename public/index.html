@@ -27,17 +27,69 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <style>
+    @media only screen and (max-width: 600px) {
+      #ID_RegBar {
+        position: fixed;
+        bottom: 1px;
+        width: 100%;
+        z-index: 1;
+      }
+
+      #ID_RegBar_Logo {
+        display: none;
+      }
+
+      #ID_RegBar_OnOff {
+        display: inline-block;
+        width: 20%;
+      }
+
+      #ID_RegBar_InputText {
+        display: inline-block;
+        width: 80%;
+      }
+    }
+
+    @media only screen and (min-width: 600px) {
+      #ID_RegBar {
+        position: fixed;
+        bottom: 1px;
+        width: 100%;
+        z-index: 1;
+      }
+
+      #ID_RegBar_Logo {
+        display: inline-block;
+        width: 10%;
+      }
+
+      #ID_RegBar_Logo img {
+        float: right;
+      }
+
+      #ID_RegBar_OnOff {
+        display: inline-block;
+        width: 10%;
+      }
+
+      #ID_RegBar_InputText {
+        display: inline-block;
+        width: 80%;
+      }
+    }
+  </style>
 </head>
 
 <body>
   <!-- <div>
     <a href="#" onclick="document.getElementById('updatePage').click()">CLickTest</a>
   </div> -->
-  <div class="row p-3 mt-2 mb-1 bg-light text-dark" style="position: fixed; bottom: 5px; width: 100%; z-index: 1;">
-    <div class="col-1 text-center">
+  <div class="row p-3 mt-2 mb-1 bg-light text-dark" id="ID_RegBar">
+    <div id="ID_RegBar_Logo">
       <img src="./logo 05.png" alt="logo" width="38px">
     </div>
-    <div class="col-3">
+    <div id="ID_RegBar_OnOff">
       <button class="btn btn btn-outline-primary" id="Ison" onclick="if(!IsOn) { 
           recognition.start(); 
           IsOn = true;
@@ -51,7 +103,7 @@
           document.getElementById('Isoff').style.display = 'none';
           }" id="Isoff">Tắt</button>
     </div>
-    <div class="col-6">
+    <div id="ID_RegBar_InputText">
       <input class="form-control" type="text" id="inputCmd" disabled>
     </div>
   </div>
@@ -170,7 +222,7 @@
       // If a voice has been selected, find the voice and set the
       // utterance instance's voice attribute.
       var voices = speechSynthesis.getVoices();
-      msg.voice = voices[4]
+      msg.voice = voices[3]
       if (voiceSelect.value) {
         // msg.voice = speechSynthesis.getVoices().filter(function (voice) { return 5 == voiceSelect.value; })[0];
       }
@@ -202,9 +254,9 @@
     recognition.interimResults = false;
     recognition.continuous = true;
     //Them vao :
-    let IsOn = true;
-    document.getElementById("Ison").style.display = "none"
-    recognition.start();
+    let IsOn = false;
+    document.getElementById("Isoff").style.display = "none"
+    // recognition.start();
     if (Date.now() % 2 === 1) {
       document.getElementById('inputCmd').value = "Ứng dụng công nghệ nhận diện giọng nói vào thực hành anh ngữ."
     } else { document.getElementById('inputCmd').value = "Lưu ý: Dùng Chrome trên máy tính (laptop) chạy hệ điều hành Window để được trải nghiệm tốt nhất." }
@@ -216,19 +268,6 @@
       document.getElementById('btnSaveMessage').click();
 
     };
-
-
-    // recognition.onspeechend = function () {
-    //   document.getElementById('inputCmd').value = "speecend";
-    // };
-
-    // recognition.onstart = function () {
-    //   document.getElementById('inputCmd').value = "Chương trình đang lắng nghe...";
-    // };
-    // recognition.onend = function () {
-    //   document.getElementById('inputCmd').value = "Chương trình nhận diện giọng nói đã tắt";
-    // };
-
     recognition.addEventListener('end', function () {
       if (IsOn) {
         recognition.start();

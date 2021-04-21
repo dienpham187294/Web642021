@@ -98,7 +98,7 @@ function _ArrofPeople(ArrPeopleUse, SetPage) {
         let Show = ArrPeopleUse.map((e, index) =>
             e.status
                 ? <div className="People" onClick={() => SetPage(index)} key={index} >
-                    <img alt={index} src={require("./img/" + e.img + ".png")} width="100px" />
+                    <img alt={index} src={e.image} width="100px" />
                 </div >
                 : "")
         return Show
@@ -110,7 +110,7 @@ function _ArrOnePeople(Page, SetArrPeopleSearch, ArrPeopleSearch, socket, IDofRo
         let Show =
             <div className="row mt-5">
                 <div className="col-4">
-                    <img alt={ArrPeople[Page].img} src={require("./img/" + ArrPeople[Page].img + ".png")} width="150px" />
+                    <img alt={ArrPeople[Page].img} src={ArrPeople[Page].image} width="150px" />
                 </div>
                 <div className="col-5">
                     <h5>Search Tool</h5>

@@ -164,7 +164,7 @@ function _ShowArrFruit(InfoFruit, SetChooseFruit, ChooseFruit) {
       <td key={index + "1"} style={{ backgroundColor: ChooseFruit === e.name ? "yellow" : "transparent" }} className="ENText"
         onClick={() => _SetNameAndSpeak(SetChooseFruit, e.name)
         }>{e.name.toUpperCase()}</td>
-      <td key={index + "2"} ><img alt={e.img} key={index + "img"} src={require(`./img/${e.img}`)} width="100px" /></td>
+      <td key={index + "2"} ><img alt={e.img} key={index + "img"} src={e.image} width="100px" /></td>
       < td key={index + "3"} style={{ backgroundColor: e.status ? "wheat" : "transparent" }}>{e.status ? "Đã hoàn thành" : "Chưa hoàn thành"}</td>
     </tr >
   )

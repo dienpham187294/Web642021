@@ -45,7 +45,6 @@ function Mbody({ socket, message, setMessage, IDofRoom, ArrIDofAllMemberInRoom }
                     document.getElementById("speak").click();
 
                 }
-
                 if (_CheckMessageAndCommand(MessageSave, "how much do you want", 75) && Date.now() - TimeCount > 300) {
                     TimeCount = Date.now();
                     MessageSave = "";
@@ -75,11 +74,11 @@ function Mbody({ socket, message, setMessage, IDofRoom, ArrIDofAllMemberInRoom }
             object.name = InfoPeople()[randomPeople].name;
             object.age = InfoPeople()[randomPeople].age;
             object.status = InfoPeople()[randomPeople].status;
-            object.img = InfoPeople()[randomPeople].img;
+            object.img = InfoPeople()[randomPeople].image;
             object.FruitName = InfoFruit()[randomFruit].name;
-            object.FruitImg = InfoFruit()[randomFruit].img;
+            object.FruitImg = InfoFruit()[randomFruit].image;
             object.FruitPrice = InfoFruit()[randomFruit].price;
-            object.FruitAmount = RandomInt(5, 15);
+            object.FruitAmount = RandomInt(1, 3);
             ArrPeople.push(object);
             SetArrPeopleUse(ArrPeople);
         }
@@ -102,7 +101,7 @@ function _ArrofPeople(ArrPeopleUse, SetPage) {
         let Show = ArrPeopleUse.map((e, index) =>
             e.status
                 ? <div className="People" onClick={() => SetPage(index)} key={index} >
-                    <img key={index} alt={e.name} src={require("./img/" + e.img + ".png")} width="100px" />
+                    <img key={index} alt={e.name} src={e.img} width="100px" />
                 </div >
                 : "")
         return Show
@@ -114,7 +113,7 @@ function _ArrOnePeople(Page, SetArrFruitSearch, ArrFruitSearch, socket, IDofRoom
         let Show =
             <div className="row mt-5">
                 <div className="col-2">
-                    <img alt={ArrPeople[Page].img} src={require("./img/" + ArrPeople[Page].img + ".png")} width="150px" />
+                    <img alt={ArrPeople[Page].img} src={ArrPeople[Page].img} width="150px" />
                 </div>
                 <div className="col-4">
                     <h5>Search Tool</h5>
@@ -128,8 +127,8 @@ function _ArrOnePeople(Page, SetArrFruitSearch, ArrFruitSearch, socket, IDofRoom
                 <div className="col-6">
                     <h5>Receipt</h5>
                     {FruitChooseToBuy !== "" ?
-                        <img key={FruitChooseToBuy} alt={FruitChooseToBuy} src={require("./img/" + FruitChooseToBuy)} width="50px" /> : ""}
-                    <input className="form-control" type="number" placeholder="Amount KG" id="numberAmount1" />
+                        <img key={FruitChooseToBuy} alt={FruitChooseToBuy} src={FruitChooseToBuy} width="50px" /> : ""}
+                    <input className="form-control" type="number" placeholder="Amount" id="numberAmount1" />
                     <input className="form-control" type="number" placeholder="Price $" id="numberPrice" />
                     <button className="btn btn-outline-primary mt-4"
                         onClick={() => _Submit(document.getElementById("numberPrice").value, document.getElementById("numberAmount1").value, socket, ArrPeople[Page], IDofRoom, ArrIDofAllMemberInRoom, SetPage)}>
@@ -187,7 +186,7 @@ function Search(name) {
 
 function ShowSearch(ArrSearch, SetFruitChooseToBuy) {
     return ArrSearch.map((e, index) => <div key={index}>
-        Fruit: {e.name} | {e.price} $ |   <img key={index} alt={e.name} src={require("./img/" + e.img)} width="50px" /> <button className="btn btn-sm btn-outline-primary" onClick={() => SetFruitChooseToBuy(e.img)}>Choose</button>
+      {e.name} | {e.price} $ |   <img key={index} alt={e.name} src={e.image} width="50px" /> <button className="btn btn-sm btn-outline-primary" onClick={() => SetFruitChooseToBuy(e.image)}>Choose</button>
     </div>)
 }
 
@@ -202,51 +201,3 @@ function _Submit(numberAmount, numberPrice, socket, OnePersonData, IDofRoom, Arr
         SetPage(-1);
     }
 }
-// function ReturnSentence1(Sentence) {
-//     let Res = "";
-//     let Arr1 = Sentence.split("");
-//     // console.log(Arr1)
-//     let ArrRes = []
-//     Arr1.forEach(e => {
-//         if (e !== " ") {
-//             if (RandomInt(0, 3) === 1) {
-//                 ArrRes.push("_")
-//             } else { ArrRes.push(e) }
-//         } else { ArrRes.push(e) }
-//     })
-
-//     Res = ArrRes.toString().split(",").join("");
-//     // console.log(Res)
-//     return Res
-// }
-
-
-// function ReturnSentence2(Sentence) {
-//     let Res = "";
-//     let Arr1 = Sentence.split("");
-//     // console.log(Arr1)
-//     let ArrRes = []
-//     Arr1.forEach(e => {
-//         if (e !== " ") {
-//             if (RandomInt(0, 1) === 1) {
-//                 ArrRes.push("_")
-//             } else { ArrRes.push(e) }
-//         } else { ArrRes.push(e) }
-//     })
-
-//     Res = ArrRes.toString().split(",").join("");
-//     // console.log(Res)
-//     return Res
-// }
-// // console.log(ReturnSentence("How are you?"))
-// // console.log(ReturnSentence("How are you?"))
-
-// let arr = Sentences300();
-
-// arr.forEach((e, index) => {
-//     arr[index].SortEN1 = ReturnSentence1(e.EN)
-//     arr[index].SortEN2 = ReturnSentence2(e.EN)
-// })
-
-// console.log(JSON.stringify(arr))
-

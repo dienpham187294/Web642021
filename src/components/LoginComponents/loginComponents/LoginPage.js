@@ -4,15 +4,16 @@ import "./LoginPage.css"
 
 let arrInfoDangkytaikhoan = [];
 function LoginPage({ socket, setPageLogin }) {
-    const [Message_dangnhap, SetMessage_dangnhap] = useState("Nhập số điện thoại và mật khẩu")
+    const [Message_dangnhap, SetMessage_dangnhap] = useState("Nhập số tên đăng nhập và mật khẩu")
+    const [ArrInfo_Status, Set_ArrInfo_Status] = useState(false)
     useEffect(() => {
         if (checkCookie("usernameEricpham")) {
             setPageLogin(false)
         } else {
             setTimeout(() => { socket.emit("Login", ["dangkytaikhoan", socket.id]); }, 1000);
-            socket.on("getinfodangkytaikhoan", (data) => { arrInfoDangkytaikhoan = data; })
         }
-    }, [socket, setPageLogin])
+        socket.on("getinfodangkytaikhoan", (data) => { arrInfoDangkytaikhoan = data; Set_ArrInfo_Status(true) })
+    }, [socket, setPageLogin, Set_ArrInfo_Status])
     function checkLogin() {
         let checkStatus = "Không tồn tại tài khoản này.";
         let arrTouse = [];
@@ -39,13 +40,13 @@ function LoginPage({ socket, setPageLogin }) {
                 <img src={require("./logo 05.png")} alt="logo" width="60%" />
             </div>
             <div className="col-lg-6 md-12 sm-12" id="Main_loginPage">
-                <div style={{ width: "100%" }}>
+                {ArrInfo_Status ? <div style={{ width: "100%" }}>
                     <form className="mt-5 text-center">
                         <div className="form-group">
                             <input
-                                type="number"
+                                type="text"
                                 className="form-control"
-                                id="ID_login_username" aria-describedby="emailHelp" placeholder="Nhập số điện thoại"
+                                id="ID_login_username" aria-describedby="emailHelp" placeholder="Nhập tên đăng nhập"
                             />
 
                         </div>
@@ -60,6 +61,11 @@ function LoginPage({ socket, setPageLogin }) {
                         <small className="form-text text-muted">{Message_dangnhap}</small>
                     </form>
                 </div>
+                    : <div>
+                        "Xin chờ giây lát!"
+                        <br/>
+                        <a href="/?m=dangnhap" className="btn-get-started scrollto">Bấm vào đây nếu quá lâu.</a>
+                    </div>}
             </div>
         </div>
     )

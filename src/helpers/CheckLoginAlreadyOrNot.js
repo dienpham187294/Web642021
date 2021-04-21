@@ -15,7 +15,7 @@ function CheckLoginAlready({ socket }) {
 
             }, 1000);
             socket.on(getCookie("username"), (data) => {
-                if (Date.now() - time > 5000 && data !== socket.id) {
+                if (Date.now() - time > 15000 && data !== socket.id) {
                     alert("Tài khoản được đăng nhập bởi người khác.");
                     delettCookie("username");
                     delettCookie("usernameEricpham");

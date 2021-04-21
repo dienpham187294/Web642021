@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react"
-import { delettCookie, getCookie } from '../../../helpers/functionCookies';
+import { checkCookie, delettCookie, getCookie } from '../../../helpers/functionCookies';
 import "./MainPage.css"
-let arrOfUser = []
 function MainPage({ socket, setPageLogin }) {
     const [Page_MainPageLogin, SetPage_MainPageLogin] = useState("1");
+    const [arrOfUser, SetArrOfUser] = useState([]);
     useEffect(() => {
-        arrOfUser = JSON.parse(getCookie("usernameEricpham"));
-        SetPage_MainPageLogin(2);
+        if (checkCookie("usernameEricpham")) {
+            SetArrOfUser(JSON.parse(getCookie("usernameEricpham")));
+            SetPage_MainPageLogin(2);
+        }
     }, [])
     function _FnLogout() {
         delettCookie("usernameEricpham");
@@ -25,16 +27,18 @@ function MainPage({ socket, setPageLogin }) {
                     <p><b>Số ngày sử dụng còn lại: </b>{Math.floor((arrOfUser[0].time - Date.now()) / (24 * 60 * 60 * 10)) / 100}  ngày</p>
                     <br /></div>
                 : ""}
-            <form className="form-row">
-                <input type="text" className="form-control col-6" placeholder="Nhập mã code" />
-                <input type="button" className="btn btn-outline-primary col-2 ml-2" value="Nhập mã" />
-            </form>
+
+
+            <a href="/?m=gia-han-tai-khoan">
+                <input type="button" className="btn btn-outline-primary col-6 mr-2" value="Gia hạn tài khoản" />
+            </a>
 
             <br />
+            <br />
             <input type="button" className="btn btn-outline-primary" onClick={() => _FnLogout()} value="Đăng xuất" />
+            <br /> <br />
+            {getCookie("username") === "Văn Điện" ? <a href="/?m=admin">Admin</a> : ""}
             <br />
-            <br />
-            {/* <input className="btn btn-outline-primary" value="Xem thống kê kết quả" /> */}
         </div >
     )
 }
