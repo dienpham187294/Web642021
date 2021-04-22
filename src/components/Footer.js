@@ -58,9 +58,9 @@ function Footer() {
                             <p>Tìm hiểu thêm và liên lạc với chúng tôi thông qua mạng xã hội.</p>
                             <div className="social-links mt-3">
                                 {/* <a href="/#" className="twitter"><i className="bx bxl-twitter"></i></a> */}
-                                <a href="/#" className="facebook"><i className="bx bxl-facebook"></i></a>
-                                {/* <a href="/#" className="instagram"><i className="bx bxl-instagram"></i></a>
-                                <a href="/#" className="google-plus"><i className="bx bxl-skype"></i></a>
+                                <a href="https://www.facebook.com/Tr%C3%B2-ch%C6%A1i-th%E1%BB%B1c-h%C3%A0nh-ti%E1%BA%BFng-anh-_-EricPham-106237278271751" rel="noopener noreferrer" target="_blank" className="facebook"><i className="bx bxl-facebook"></i></a>
+                                <a href="https://www.youtube.com/channel/UCW1ERqs9lifSH8GcE_f50Fg" target="_blank" rel="noopener noreferrer" className="youtube"><i className="icofont-youtube"></i></a>
+                                {/* <a href="/#" className="google-plus"><i className="bx bxl-skype"></i></a>
                                 <a href="/#" className="linkedin"><i className="bx bxl-linkedin"></i></a> */}
                             </div>
                         </div>

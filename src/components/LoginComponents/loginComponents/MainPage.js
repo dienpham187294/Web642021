@@ -29,14 +29,19 @@ function MainPage({ socket, setPageLogin }) {
                 : ""}
 
 
+
+            <h5>Khóa thực hành tiếng anh miễn phí cho thành viên mới.</h5>
+            <a href="/?m=dang-ky-khoa-mien-phi">Đăng ký tại đây!</a>
+            <br />
+            <br />
+
             <a href="/?m=gia-han-tai-khoan">
                 <input type="button" className="btn btn-outline-primary col-6 mr-2" value="Gia hạn tài khoản" />
             </a>
+            <input type="button" className="btn btn-outline-primary" onClick={() => _FnLogout()} value="Đăng xuất" />
+            <br />
 
             <br />
-            <br />
-            <input type="button" className="btn btn-outline-primary" onClick={() => _FnLogout()} value="Đăng xuất" />
-            <br /> <br />
             {getCookie("username") === "Văn Điện" ? <a href="/?m=admin">Admin</a> : ""}
             <br />
         </div >

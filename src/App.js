@@ -6,14 +6,15 @@ import Footer from './components/Footer';
 import Login from './components/LoginComponents/Login';
 import Giahantaikhoan from './components/LoginComponents/Giahantaikhoan';
 import Dangkytaikhoan from './components/LoginComponents/Dangkytaikhoan';
+import Dangkykhoahocmienphi from './components/LoginComponents/Dangkykhoahocmienphi';
 import Admin from './components/LoginComponents/admin';
 import Giaotiep from "./components/gameComponents/Giaotiep"
 import queryString from "query-string";
 import { BrowserRouter as Router } from "react-router-dom";
 // import CheckLoginAlready from "./helpers/CheckLoginAlreadyOrNot"
-let socket = io("http://127.0.0.1:4444");
+// let socket = io("http://127.0.0.1:4444");
 // // https://app-dienpham.herokuapp.com/
-// let socket = io("https://app-dienpham.herokuapp.com/");
+let socket = io("https://app-dienpham.herokuapp.com/");
 const App = () => {
   const [MainPage, SetMainPage] = useState("home");
   const [message, setMessage] = useState('Message first');
@@ -42,7 +43,8 @@ const App = () => {
               : MainPage === "dang-ky-tai-khoan" ? <Dangkytaikhoan socket={socket} />
                 : MainPage === "giaotiep" ? <Giaotiep socket={socket} message={message} setMessage={setMessage} />
                   : MainPage === "gia-han-tai-khoan" ? <Giahantaikhoan />
-                    : <Home SetSrcYoutube={SetSrcYoutube} />}
+                    : MainPage === "dang-ky-khoa-mien-phi" ? <Dangkykhoahocmienphi socket={socket} />
+                      : <Home SetSrcYoutube={SetSrcYoutube} />}
       </Router>
       <Footer />
 
@@ -54,6 +56,3 @@ export default App;
 
 
 
-// : MainPage === "doctruyen" ? <Reading socket={socket} />
-// : MainPage === "tuvung" ? <Vocabulary socket={socket} />
-//   : MainPage === "giaotrinh" ? <GameBoard socket={socket} />

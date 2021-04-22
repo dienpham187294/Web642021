@@ -15,6 +15,7 @@ function checkAdmin() {
 let Data_User_notState_change = [];
 function Admin({ socket }) {
     const [Data_Username, setData_Username] = useState([]);
+    const [Data_LicHoc, SetData_LicHoc] = useState([]);
     const [CheckAlready, SetCheckAlready] = useState(false);
     useEffect(() => {
         checkAdmin();
@@ -26,6 +27,9 @@ function Admin({ socket }) {
             setData_Username(data);
             document.getElementById("textarea").value = JSON.stringify(Data_User_notState_change);
             SetCheckAlready(false)
+        });
+        socket.on("adminInfoLichHoc", (data) => {
+            SetData_LicHoc(data);
         });
         socket.on("adminInfoError", (data) => {
             alert(data);
@@ -71,6 +75,29 @@ function Admin({ socket }) {
         socket.emit("admin", ["get_info", socket.id]);
     }
 
+    function FN_Themlophoc() {
+        let Malophoc = document.getElementById("ID_Malophoc").value;
+        let Thoigian = document.getElementById("ID_Thoigian").value;
+        let Trangthai = document.getElementById("ID_Trangthai").value;
+        if (Malophoc.length > 5 && Thoigian.length > 5 && Trangthai.length > 5) {
+            socket.emit("admin", ["themlophoc", Malophoc, Thoigian, Trangthai, socket.id]);
+        }
+    }
+
+    function FN_Doitrangthai() {
+        let RadioInput = document.querySelector('input[name="lichhoc"]:checked');
+        let SelectInput = document.getElementById("ID_select_doitrangthai").value;
+
+        if (RadioInput !== null && SelectInput !== "none") {
+            Data_LicHoc.forEach(e => {
+                if (e.name === RadioInput.value) {
+                    e.status = SelectInput;
+                }
+            })
+            socket.emit("admin", ["doitrangthai", Data_LicHoc, socket.id]);
+
+        }
+    }
     return (
         <div>
             <p className="border border-primary mt-3" />
@@ -97,7 +124,26 @@ function Admin({ socket }) {
             </div>
             <textarea id="textarea" className="form-control mt-5" />
             <p className="border border-primary mt-3" />
-            <div className="mt-5"> {JSON.stringify(Data_Username)} </div>
+            <div className="mt-5"> {FN_ShowLichHoc(Data_LicHoc, FN_CountMembers, FN_ShowMembers)} </div>
+            <p className="border border-primary mt-3" />
+            <form>
+                <select className="form-control mb-2" id="ID_select_doitrangthai">
+                    <option value="None">None</option>
+                    <option value="Đang nhận đăng ký">Đang nhận đăng ký</option>
+                    <option value="Đang triển khai">Đang triển khai</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+                <input type="button" className="btn btn-primary mb-3" value="Đổi trạng thái" onClick={() => FN_Doitrangthai()} />
+            </form>
+
+            <form>
+                <input type="text" placeholder="Mã lớp học" id="ID_Malophoc" />
+                <input type="text" placeholder="Thời gian lớp học" id="ID_Thoigian" />
+                <input type="text" placeholder="Trạng thái" id="ID_Trangthai" />
+                <input type="button" value="Thêm lớp học" onClick={() => FN_Themlophoc()} />
+            </form>
+            <p className="border border-primary mt-3" />
+            <div className="mt-5"> {JSON.stringify(Data_LicHoc)} </div>
         </div>
     );
 }
@@ -110,7 +156,7 @@ function GamelistInfo({ Data_Username }) {
             <thead>
                 <tr>
                     <td>Username</td>
-                    {/* <td>Password</td> */}
+                    <td>Phone</td>
                     <td>Name</td>
                     {/* <td>Position</td> */}
                     {/* <td>IPaddress</td> */}
@@ -123,7 +169,7 @@ function GamelistInfo({ Data_Username }) {
             <tbody>{listinfo.map((dot) =>
                 <tr key={Key()}>
                     <td>{dot.username}</td>
-                    {/* <td>{dot.password}</td> */}
+                    <td>{dot.phone}</td>
                     <td>{dot.name}</td>
                     {/* <td>{dot.position}</td> */}
                     {/* <td>{dot.ipaddress}</td> */}
@@ -152,4 +198,54 @@ function IsJsonString(str) {
         return false;
     }
     return true;
+}
+
+function FN_ShowLichHoc(Data_LicHoc, FN_CountMembers, FN_ShowMembers) {
+    if (Data_LicHoc.length === 0) {
+        return "Chờ trong giây lát."
+    }
+    return <table className="table">
+        <thead>
+            <td>Radio</td>
+            <td>Mã lớp học</td>
+            <td>Số học viên đăng ký</td>
+            <td>Trạng thái</td>
+            <td>Thời gian</td>
+            <td>Chi tiết</td>
+        </thead>
+        <tbody>{Data_LicHoc.map((e, index) =>
+            <tr key={index}>
+                <td><input type="radio" name="lichhoc" value={e.name} /></td>
+                <td>{e.name}</td>
+                <td>{FN_CountMembers(e.members)}</td>
+                <td>{e.status}</td>
+                <td>{e.time}</td>
+                <td>{FN_ShowMembers(e.members)}</td>
+            </tr>)}</tbody> </table>
+
+}
+
+function FN_CountMembers(arrMembers) {
+    let arrTemp = []
+    if (arrMembers.length === 0) {
+        return 0
+    }
+    arrMembers.forEach(e => {
+        if (e.status) {
+            arrTemp.push(e)
+        };
+    });
+    return arrTemp.length
+}
+function FN_ShowMembers(arrMembers) {
+    let arrTemp = ""
+    if (arrMembers.length === 0) {
+        return "Chưa có người đăng ký."
+    }
+    arrMembers.forEach(e => {
+        if (e.status) {
+            arrTemp += e.name + " | "
+        };
+    });
+    return arrTemp
 }

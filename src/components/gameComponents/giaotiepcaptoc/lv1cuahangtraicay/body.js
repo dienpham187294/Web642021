@@ -30,6 +30,7 @@ function Mbody({ socket, message, setMessage, IDofRoom, ArrIDofAllMemberInRoom }
             ArrPeople[num].status = false;
             MessageSave += message;
             if (message !== "") {
+                ArrPeople[num]._FN(message)
                 if (_CheckMessageAndCommand(MessageSave, "what would you like", 75) && Date.now() - TimeCount > 300) {
                     TimeCount = Date.now();
                     MessageSave = "";
@@ -79,6 +80,9 @@ function Mbody({ socket, message, setMessage, IDofRoom, ArrIDofAllMemberInRoom }
             object.FruitImg = InfoFruit()[randomFruit].image;
             object.FruitPrice = InfoFruit()[randomFruit].price;
             object.FruitAmount = RandomInt(1, 3);
+            object._FN = function TestFunction(messagetest) {
+                alert(messagetest)
+            }
             ArrPeople.push(object);
             SetArrPeopleUse(ArrPeople);
         }
@@ -186,7 +190,7 @@ function Search(name) {
 
 function ShowSearch(ArrSearch, SetFruitChooseToBuy) {
     return ArrSearch.map((e, index) => <div key={index}>
-      {e.name} | {e.price} $ |   <img key={index} alt={e.name} src={e.image} width="50px" /> <button className="btn btn-sm btn-outline-primary" onClick={() => SetFruitChooseToBuy(e.image)}>Choose</button>
+        {e.name} | {e.price} $ |   <img key={index} alt={e.name} src={e.image} width="50px" /> <button className="btn btn-sm btn-outline-primary" onClick={() => SetFruitChooseToBuy(e.image)}>Choose</button>
     </div>)
 }
 
