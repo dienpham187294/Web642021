@@ -7,7 +7,7 @@ function Dangkykhoahocmienphi({ socket }) {
     const [Data_LichHoc, SetData_LichHoc] = useState([]);
     const [LichHocPick, SetLichHocPick] = useState("");
     useEffect(() => {
-        if (checkCookie("usernameEricpham")) {
+        if (checkCookie("username")) {
             SetPage_DangkykhoahocMienphi(2);
         }
     }, []);
@@ -22,10 +22,11 @@ function Dangkykhoahocmienphi({ socket }) {
     function FN_PickClass() {
         if (Date.now() - timeGap > 500 && LichHocPick !== "") {
             timeGap = Date.now();
-            socket.emit("Login", ["DangKyLopHoc_Pickclass", LichHocPick, JSON.parse(getCookie("usernameEricpham"))[0].username, socket.id])
+            socket.emit("Login", ["DangKyLopHoc_Pickclass", LichHocPick, getCookie("username"), socket.id])
         }
         socket.on("DangKyLopHoc_Pickclass", data => {
             SetPage_DangkykhoahocMienphi(3);
+            socket.emit("admin", ["codangkykhoahocmienphi"])
         })
     }
     return (
@@ -45,7 +46,7 @@ function Dangkykhoahocmienphi({ socket }) {
                     <div>
                         <h3>Chọn lịch học!</h3>
                         <br />
-                        {FN_LichHoc(Data_LichHoc, SetLichHocPick, LichHocPick, FN_CountMembers)}
+                        {FN_LichHoc(Data_LichHoc, SetLichHocPick, LichHocPick)}
                         <br />
                         <input className="btn btn-outline-primary mt-1" type="button" value="Chọn" onClick={() => FN_PickClass()} />
                     </div>
@@ -75,36 +76,24 @@ function Dangkykhoahocmienphi({ socket }) {
 export default Dangkykhoahocmienphi;
 
 
-function FN_LichHoc(Data_LichHoc, SetLichHocPick, LichHocPick, FN_CountMembers) {
-    return Data_LichHoc.map((e, index) => e.status !== "inactive" ?
-        <div className="CLass_DivLichhoc" key={index}
-            onClick={() => SetLichHocPick(e.name)}
-            style={{ backgroundColor: LichHocPick === e.name ? "yellow" : "transparent" }}>
-            <p>
-                <b>Mã lớp học: </b> {e.name}
-                <br />
-                <b>Thời gian: </b>
-                <br />
-                {e.time}
-                <br />
-                <b>Trạng thái: </b>
-                {e.status}
-                <br />
-                <b>Số người đã đăng ký: </b>
-                {FN_CountMembers(e.members)}
-            </p>
-        </div > : ""
-    )
-}
-function FN_CountMembers(arrMembers) {
-    let arrTemp = []
-    if (arrMembers.length === 0) {
-        return 0
+function FN_LichHoc(Data_LichHoc, SetLichHocPick, LichHocPick) {
+    if (Data_LichHoc.length === 0) {
+        return "Chờ trong giây lát."
     }
-    arrMembers.forEach(e => {
-        if (e.status) {
-            arrTemp.push(e)
-        };
-    });
-    return arrTemp.length
+    return <table className="table">
+        <thead>
+            <td>Mã lớp học</td>
+            <td>Trạng thái</td>
+            <td>Thời gian</td>
+        </thead>
+        <tbody>{Data_LichHoc.map((e, index) => e.status !== "inactive" ?
+            <tr key={index} onClick={() => SetLichHocPick(e.name)}
+                style={{ backgroundColor: LichHocPick === e.name ? "yellow" : "transparent" }}>
+                <td>{e.name}</td>
+                <td>{e.status}</td>
+                <td>{e.time}</td>
+
+            </tr> : "")}</tbody> </table>
 }
+
+

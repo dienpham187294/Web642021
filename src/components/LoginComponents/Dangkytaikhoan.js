@@ -78,6 +78,7 @@ function Dangkytaikhoan({ socket }) {
     }
     function _FN_Dangkyngay() {
         socket.emit("Login", ["DangkyInfoSubmit", username, Name, Email, Password, Ip, Phone]);
+        socket.emit("admin", ["codangkytaikhoanmoi"])
         document.getElementById("ID_login_btn").click();
     }
     return (

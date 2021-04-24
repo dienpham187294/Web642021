@@ -1,33 +1,32 @@
+function _CheckMessageAndCommand(message, command, percent) {
+    let arrMessage = _SortMessage(message);
+    let arrCommand = _SortMessage(command).split(" ");
 
-import SortMessage from "./SortMessage"
-function CheckMassageAndCommand(message, command, howmanypercentright) {
-    let arrMessage = message.split(" ");
-    let arrCommand = SortMessage(command).split(" ");
+    let numberOfNull = 0;
+    let numberCountExist = 0;
+    let numberOfArrayLength = arrCommand.length;
 
-
-    let ResultArrTrue = [];
-    let ResultArrFalse = [];
-    let ResultTrueorFalse = false;
-
-    let CountExistWord = 0;
     arrCommand.forEach(e => {
-        let exist = false
-        arrMessage.forEach(ee => {
-            if (ee === e) {
-                exist = true
-            }
-        })
-        if (exist) {
-            CountExistWord += 1;
-            ResultArrTrue.push(e);
+        if (e === " ") {
+            numberOfNull += 1;
         } else {
-            ResultArrFalse.push(e)
+            if (arrMessage.indexOf(e) > -1) {
+                numberCountExist += 1;
+            }
         }
-    });
-    if (CountExistWord / arrCommand.length * 100 > howmanypercentright) {
-        ResultTrueorFalse = true;
-    }
-    return [ResultTrueorFalse, ResultArrTrue, ResultArrFalse]
-}
+    })
 
-export default CheckMassageAndCommand
+    if (numberCountExist / (numberOfArrayLength - numberOfNull) * 100 > percent) {
+        return true
+    }
+    return false
+
+}
+export default _CheckMessageAndCommand
+
+
+function _SortMessage(messCheck) {
+    let a = messCheck.split(/[\s,?#!-().]+/)
+    let b = a.toString();
+    return b.split(",").join(" ").toLowerCase()
+}

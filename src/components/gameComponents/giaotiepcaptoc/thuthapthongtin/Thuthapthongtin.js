@@ -10,7 +10,7 @@ function Thuthapthongtin({ socket, message, setMessage }) {
     const [jionroom, setjionRoom] = useState("");
     const [start, setStart] = useState("");
     const [gamePlayData, setGamePlayData] = useState([]);
-
+    const [Score, Set_Score] = useState(0);
     const [IDofRoom, setIDofRoom] = useState("");
     const [ArrIDofAllMemberInRoom, setArrIDofAllMemberInRoom] = useState([]);
     useEffect(() => {
@@ -75,7 +75,9 @@ function Thuthapthongtin({ socket, message, setMessage }) {
             {
                 sence === "-"
                     ? <MonopolyLobby socket={socket} room={room} username={getCookie("username")} setjionRoom={setjionRoom} setStart={setStart} message={message} setMessage={setMessage} />
-                    : <MonoGameSence gamePlayData={gamePlayData} setGamePlayData={setGamePlayData} socket={socket} message={message} setMessage={setMessage} IDofRoom={IDofRoom} ArrIDofAllMemberInRoom={ArrIDofAllMemberInRoom} sence={sence} />
+                    : <MonoGameSence
+                        Score={Score} Set_Score={Set_Score}
+                        gamePlayData={gamePlayData} setGamePlayData={setGamePlayData} socket={socket} message={message} setMessage={setMessage} IDofRoom={IDofRoom} ArrIDofAllMemberInRoom={ArrIDofAllMemberInRoom} sence={sence} />
             }
         </div >
 

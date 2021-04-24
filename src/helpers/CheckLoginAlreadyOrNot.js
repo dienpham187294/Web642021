@@ -4,7 +4,7 @@ let time = Date.now();
 let JustOneEmit = 1;
 function CheckLoginAlready({ socket }) {
     useEffect(() => {
-        if (!checkCookie("usernameEricpham")) {
+        if (!checkCookie("username")) {
             document.getElementById("btnCheck").click()
         } else {
             setTimeout(() => {

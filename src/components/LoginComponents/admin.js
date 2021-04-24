@@ -5,7 +5,7 @@ import { Key } from "../../helpers/Key";
 
 function checkAdmin() {
     if (checkCookie("username")) {
-        if (getCookie("username") === "Văn Điện") {
+        if (getCookie("username") === "0918284482") {
         } else { document.getElementById("ID_home").click() }
     } else {
         document.getElementById("ID_home").click()
@@ -83,7 +83,12 @@ function Admin({ socket }) {
             socket.emit("admin", ["themlophoc", Malophoc, Thoigian, Trangthai, socket.id]);
         }
     }
-
+    function FN_SaveNewData() {
+        let DatatoSave = document.getElementById("textareaLichhoc").value;
+        if (IsJsonString(DatatoSave)) {
+            socket.emit("admin", ["doitrangthai", JSON.parse(DatatoSave), socket.id]);
+        }
+    }
     function FN_Doitrangthai() {
         let RadioInput = document.querySelector('input[name="lichhoc"]:checked');
         let SelectInput = document.getElementById("ID_select_doitrangthai").value;
@@ -143,6 +148,8 @@ function Admin({ socket }) {
                 <input type="button" value="Thêm lớp học" onClick={() => FN_Themlophoc()} />
             </form>
             <p className="border border-primary mt-3" />
+            <textarea id="textareaLichhoc" className="form-control mt-5" />
+            <input type="button" value="Save new data" onClick={() => FN_SaveNewData()} />
             <div className="mt-5"> {JSON.stringify(Data_LicHoc)} </div>
         </div>
     );
@@ -158,8 +165,6 @@ function GamelistInfo({ Data_Username }) {
                     <td>Username</td>
                     <td>Phone</td>
                     <td>Name</td>
-                    {/* <td>Position</td> */}
-                    {/* <td>IPaddress</td> */}
                     <td>Email</td>
                     <td>Time</td>
                     <td>Status</td>
@@ -171,15 +176,11 @@ function GamelistInfo({ Data_Username }) {
                     <td>{dot.username}</td>
                     <td>{dot.phone}</td>
                     <td>{dot.name}</td>
-                    {/* <td>{dot.position}</td> */}
-                    {/* <td>{dot.ipaddress}</td> */}
                     <td>{dot.email}</td>
                     <td>{Math.floor((dot.time - Date.now()) / (24 * 60 * 60 * 10)) / 100} Ngày</td>
                     <td>{dot.status}
                         <input type="radio" value={dot.username} name="user" />
                     </td>
-                    {/* <td onClick={() => props._FN_delete(dot.username)} style={{ cursor: "grab" }}> {dot.username === "0918284482" ? "" : "Delete"}</td> */}
-
                 </tr>
             )}
             </tbody>

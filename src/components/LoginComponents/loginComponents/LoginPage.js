@@ -7,7 +7,7 @@ function LoginPage({ socket, setPageLogin }) {
     const [Message_dangnhap, SetMessage_dangnhap] = useState("Nhập số tên đăng nhập và mật khẩu")
     const [ArrInfo_Status, Set_ArrInfo_Status] = useState(false)
     useEffect(() => {
-        if (checkCookie("usernameEricpham")) {
+        if (checkCookie("username")) {
             setPageLogin(false)
         } else {
             setTimeout(() => { socket.emit("Login", ["dangkytaikhoan", socket.id]); }, 1000);
@@ -30,8 +30,7 @@ function LoginPage({ socket, setPageLogin }) {
         })
         if (checkStatus === "") {
             setPageLogin(false);
-            setCookie("usernameEricpham", JSON.stringify(arrTouse), 3)
-            setCookie("username", arrTouse[0].name, 3)
+            setCookie("username", arrTouse[0].username, 3)
         } else { SetMessage_dangnhap(checkStatus) }
     }
     return (
@@ -51,7 +50,7 @@ function LoginPage({ socket, setPageLogin }) {
 
                         </div>
                         <div className="form-group">
-                            <input type="password" className="form-control" id="ID_login_password" placeholder="Nhập password"
+                            <input type="password" className="form-control" id="ID_login_password" placeholder="Nhập mật khẩu"
                             />
                         </div>
                         <button
@@ -63,7 +62,7 @@ function LoginPage({ socket, setPageLogin }) {
                 </div>
                     : <div>
                         "Xin chờ giây lát!"
-                        <br/>
+                        <br />
                         <a href="/?m=dangnhap" className="btn-get-started scrollto">Bấm vào đây nếu quá lâu.</a>
                     </div>}
             </div>

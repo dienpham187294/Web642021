@@ -2,19 +2,22 @@ import React, { useState, useEffect } from "react";
 import { getCookie, checkCookie } from '../helpers/functionCookies'
 
 
-function Header() {
+function Header({ socket }) {
     const [UserStatus, SetUserStatus] = useState("Trial");
-    useEffect(() => {
 
-        setTimeout(() => {
-            if (checkCookie("usernameEricpham")) {
-                let arrOfUser = JSON.parse(getCookie("usernameEricpham"));
-                if (arrOfUser[0].status.indexOf("Trial") === -1) {
-                    SetUserStatus(arrOfUser[0].status);
+    useEffect(() => {
+        if (checkCookie("username")) {
+            setTimeout(() => { socket.emit("Login", ["dangkytaikhoan", socket.id]); }, 200);
+        }
+        socket.on("getinfodangkytaikhoan", (data) => {
+            data.forEach(e => {
+                if (e.username === getCookie("username")) {
+                    if (e.status.indexOf("Trial") === -1)
+                        SetUserStatus(e.status);
                 }
-            }
-        }, 200)
-    }, [])
+            });
+        })
+    }, [socket])
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -69,6 +72,47 @@ function Header() {
                                 <li><a className="dropdown-item" href="/?m=giaotiep&p=gioithieu">Giới thiệu phương pháp nhập vai.</a></li>
                             </ul>
                         </li>
+
+                        {/* BeginBlog */}
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" href="/?m=blog" id="navbarScrollingDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Blog </a>
+
+                            <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+
+                                <li><a className="dropdown-item" href="/?m=blog&p=khoa-hoc-mien-phi">Khóa thực hành tiếng anh miễn phí vì cộng đồng.</a>
+                                </li>
+                                <li><a className="dropdown-item" href="/?m=blog&p=ngon-ngu-gan-lien-muc-dich">Ngôn ngữ gắn liền mục đích là gì?</a>
+                                </li>
+                                <li>
+                                    <hr className="dropdown-divider" />
+                                </li>
+                                <li><a className="dropdown-item" href="/?m=blog&p=gioi-thieu">Giới thiệu blog của EricPham.</a></li>
+                            </ul>
+                        </li>
+                        {/* End Blog */}
+                        {/* BeginTaiNguyenMienPhi */}
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" href="/?m=tainguyen" id="navbarScrollingDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Tài nguyên miễn phí </a>
+
+                            <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                <li><a className="dropdown-item" href="/?m=dang-ky-khoa-mien-phi">Đăng ký khóa thực hành online miễn phí vì cộng đồng.</a>
+                                </li>
+                                <li><a className="dropdown-item" href="/?m=tainguyen&p=800-cau-giao-tiep-co-ban">Khóa thực hành 800 câu giao tiếp cơ bản nhất.</a>
+                                </li>
+                                <li><a className="dropdown-item" href="/?m=tainguyen&p=ngon-ngu-gan-lien-muc-dich">Khóa thực hành từ vựng bằng hình ảnh.</a>
+                                </li>
+                                <li>
+                                    <hr className="dropdown-divider" />
+                                </li>
+                                <li><a className="dropdown-item" href="/?m=tainguyen&p=gioi-thieu">Giới thiệu tài nguyên miễn phí.</a></li>
+                            </ul>
+                        </li>
+                        {/* EndTaiNguyenMienPhi */}
+
                     </ul>
                     <form className="d-flex">
                         <a href="/?m=dangnhap" id="ID_login_btn" className="btn btn-outline-success">{checkCookie("username") ? "Thông tin tài khoản" : "Đăng nhập"}</a>

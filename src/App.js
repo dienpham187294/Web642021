@@ -9,12 +9,13 @@ import Dangkytaikhoan from './components/LoginComponents/Dangkytaikhoan';
 import Dangkykhoahocmienphi from './components/LoginComponents/Dangkykhoahocmienphi';
 import Admin from './components/LoginComponents/admin';
 import Giaotiep from "./components/gameComponents/Giaotiep"
+import TainguyenMienphi from "./components/gameComponents/TainguyenMienphi"
 import queryString from "query-string";
 import { BrowserRouter as Router } from "react-router-dom";
 // import CheckLoginAlready from "./helpers/CheckLoginAlreadyOrNot"
-// let socket = io("http://127.0.0.1:4444");
-// // https://app-dienpham.herokuapp.com/
-let socket = io("https://app-dienpham.herokuapp.com/");
+let socket = io("http://127.0.0.1:4444");
+// https://app-dienpham.herokuapp.com/
+// let socket = io("https://app-dienpham.herokuapp.com/");
 const App = () => {
   const [MainPage, SetMainPage] = useState("home");
   const [message, setMessage] = useState('Message first');
@@ -29,7 +30,7 @@ const App = () => {
   return (
     <div className="container-fluid">
       <button style={{ display: "none" }} id="btnSaveMessage" onClick={() => setMessage(document.getElementById('inputCmd').value)}>Save</button>
-      <Header />
+      <Header socket={socket} />
       { SrcYoutube !== "-" ? <div id="ID_Video_Frame">
         <button className="btn btn-outline-primary" onClick={() => SetSrcYoutube("-")}>Close</button>
         <div id="ID_Iframe">
@@ -44,7 +45,8 @@ const App = () => {
                 : MainPage === "giaotiep" ? <Giaotiep socket={socket} message={message} setMessage={setMessage} />
                   : MainPage === "gia-han-tai-khoan" ? <Giahantaikhoan />
                     : MainPage === "dang-ky-khoa-mien-phi" ? <Dangkykhoahocmienphi socket={socket} />
-                      : <Home SetSrcYoutube={SetSrcYoutube} />}
+                      : MainPage === "tainguyen" ? <TainguyenMienphi socket={socket} />
+                        : <Home SetSrcYoutube={SetSrcYoutube} />}
       </Router>
       <Footer />
 
